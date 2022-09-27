@@ -1,0 +1,22 @@
+CREATE DATABASE bibliography;
+USE bibliography;
+
+CREATE TABLE original_series(series_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(40), start_pub YEAR, end_pub YEAR, count INT);
+INSERT INTO original_series(name, start_pub, end_pub, count) VALUES ('Goosebumps', 1992, 2022, 211);
+INSERT INTO original_series(name, start_pub, end_pub, count) VALUES ('Fear Street', 1989, 1997, 121), ('A Fear Street Never', 1995, 1997, 36), (' Mostly Ghostly', 2004, 2006, 8), ('Rotten School', 2005, 2008, 16);
+INSERT INTO original_series(name, start_pub, end_pub, count) VALUES ('The Nightmare Room', 2001, 2001, 15), ('Space Cadets', 1991, 1992, 3), ('Hark', 1985, 1985, 2), ('Dangerous Girls', 2003, 2010, 4);
+INSERT INTO original_series(name, start_pub, end_pub, count) VALUES ('Just Beyond(Graphic Novel Series)', 2019, 2021, 4);
+SELECT * FROM original_series;
+
+CREATE TABLE stand_alone_novels(novel_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(40), publication YEAR);
+INSERT INTO stand_alone_novels(name, publication) VALUES ('Phone Calls', 1990), ('Curtains', 1990), ('The Beast', 1994), ('The Beast 2', 1995), ('Superstitious', 1996), ('It Came From Ohio!', 1997), ('Three Faces of Me', 2000), ('The Sitter', 2003);
+SELECT * FROM stand_alone_novels;
+
+CREATE TABLE anthologies (anth_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(40), publication YEAR, comment TEXT);
+INSERT INTO anthologies(name, publication, comment) VALUES ('The Nigthmare Hour', 2000, NULL), ('The Haunting Hour', 2002, 'made INTO direct-to- DVD movie in 2007 and a tv series that aired FROM 2010 to 2014'), ('Beware!', 2004, 'editor'), ('Temptation', 2012, NULL), ('Scream and Scream Again', 2018, 'editor'), ('Stinetinglers', 2022, NULL);
+SELECT * FROM anthologies;
+
+CREATE TABLE short_stories(stories_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(40), start_pub YEAR, end_pub YEAR, count INT);
+INSERT INTO short_stories(name, start_pub, end_pub, count) VALUES ('Rainy Nigth Theater Podcast', 2016, 2017, 10), ('Short Stories', 1991, 2022, 17), ('Books name J.B. Stine', 1978, 1992, 35), ('Books name Zachary Blue', 1987, 1987, 2);
+INSERT INTO short_stories(name, start_pub, end_pub, count) VALUES ('Crosswinds', 1988, 1990, 2), ('Twist-a-plot', 1982, 1984, 4), ('Find a Fate', 1984, 1986, 5), ('Wizard and Warriors', 1984, 1986, 7);
+SELECT * FROM short_stories;
