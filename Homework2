@@ -1,0 +1,38 @@
+CREATE DATABASE homework2;
+USE homework2;
+CREATE TABLE user(id INT PRIMARY KEY NOT NULL auto_increment, name VARCHAR(20) NOT NULL, surname VARCHAR(20) NOT NULL, nick VARCHAR(20) NOT NULL, login VARCHAR(20) NOT NULL UNIQUE, password_hash VARCHAR(30) NOT NULL, salt VARCHAR(20) NOT NULL, registrated TIMESTAMP DEFAULT current_TIMESTAMP);
+INSERT INTO user(id, name, surname, nick, login, password_hash, salt, registrated) VALUES (1, 'Elena', 'Kotova', 'Kotik', 'kotovae@yahoo.com', 'efgrtg52thf2vg', 'vf5nj8cd', '2020-03-01 15:14:36'), (2, 'Natallia', 'Reshetova', 'Nata', 'reshen@icloud.com', 'lnl5nvjtbk545vn', 'vbhjhalh5', '2021-01-13 10:17:01'), (3, 'Marina', 'Rakevich', 'Marusia', 'rakem@gmail.com', 'cjnvjb36tbn5vtnj', 'zws5crv8s', '2019-12-31 22:53:19'), (4, 'Alex', 'Martinov', 'Sashaaa', 'matina@mail.ru', '2651hbvf256vhgc', '56hbgv5gv', '2017-11-28 08:54:33'), (5, 'Misha', 'Ozashvili', 'jackson', 'ozark@icloud.com', '15vhflgtgdtbkgvkh', '15swd23lh5', '2022-07-13 15:14:13'); 
+SELECT * FROM user;
+
+CREATE TABLE friend (id INT  NOT NULL auto_increment, friend_id INT NULL, name VARCHAR(20) NOT NULL, surname VARCHAR(20) NOT NULL, status VARCHAR(50), PRIMARY KEY (id), FOREIGN KEY (friend_id) REFERENCES user(id));
+INSERT INTO friend(id, friend_id, name, surname, status) VALUES (1, 5, 'Mark', 'Switt', 'Open to work'), (2, 3, 'Mary', 'Semenova', 'Easy homemade desserts'), (3, 1, 'Olga', 'Protsyk', 'Love my family'), (4, 5, 'Sofia', 'Klimova', 'An apple a day has a doctor away'), (5, 4, 'Jack', 'London', 'I write my life'), (6, 2, 'James', 'Chase', 'Blondy are guilty'), (7, 2, 'Agatha', 'Christie', 'She wrote a murder');
+
+SELECT f.name, f.surname,f.status, u.name, u.surname
+ FROM friend f
+ LEFT JOIN user u
+ ON f.friend_id=u.id;     
+
+CREATE TABLE post (id INT NOT NULL auto_increment, author_id INT NOT NULL, posted TIMESTAMP DEFAULT current_TIMESTAMP, text TEXT, last_edition TIMESTAMP DEFAULT current_TIMESTAMP, PRIMARY KEY(id), FOREIGN KEY(author_id) REFERENCES user(id));
+INSERT INTO post(id, author_id, posted, text, last_edition) VALUES (1, 1, '2022-03-01 10:12:25', 'One evening when little Kay was at home, he climbed on a chair and looked out the window. One of the snowflakes was larger than the others and it became larger and larger till at last it became the figure of a woman dressed in a long white dress. Her dress was made of a million little flakes. She was beautiful but made of ice, and her eyes were made of ice, too, and were shining like bright stars. She nodded toward the window and waved her hand. The little boy got afraid and ran FROM the window.', '2022-03-01 10:12:25'), (2, 1, '2022-03-01 12:12:12', 'Then spring came and the children were again in the garden. Kay and Gerda held each other by the hand and kissed the roses. One day Kay and Gerda sat looking at the pictures of animals and birds in a big book. Suddenly Kay cried out, \'Oh, there is something in my heart I feel such a pain\' and soon after that he said, \'There is something in my eye.\' Gerda put her arm round his neck and looked INTO his eye, but she did NOT see anything. \'I think it is gone,\' he said.
+', '2022-03-15 12:12:00');
+INSERT INTO post(id, author_id, posted, text, last_edition) VALUES (3, 4, '2022-03-15 21:09:25', 'But it was NOT gone - it was one of the bits of the magic mirror which made everything beautiful and kind seem ugly and evil. Poor little Kay also received a small piece of that mirror in his heart, which very quickly became a piece of ice and made his heart cold and evil.', '2022-03-20 10:52:01'), (4, 2, '2020-07-28 23:59:12', 'Suddenly the large sledge stopped and the person in it stood up. The fur and the cap which were made of snow fell off, and he saw a lady, tall and white. It was the Snow Queen. She seated Kay in her sledge and kissed him. The kiss was colder than ice; it went to his heart. Kay felt as if he was dying but only for a moment. Soon he felt quite well again and did NOT NOTice the cold around him.', '2022-01-12 12:12:00'), (5, 5, '2019-03-15 22:16:25', 'Then she took Gerda INTO the flower-garden. How beautiful it was! No picture-book could have more beautiful colors. Gerda felt happy, and she played till the sun went down behind the tall cherry-trees. The next day and for many days after that the girl played with the flowers in the warm sunshine. But she saw no roses there because the witch touched all the roses with her magic stick, and they disappeared under the earth. The old woman was afraid that the roses could remind Gerda of the roses at her home and of little Kay, and she will run away.', '2019-11-24 13:28:47'), (6, 3, '2018-01-11 22:51:12', 'Gerda did NOT know anything about Kay. What could happen to him? Some boys told her that his sledge followed a very large sledge, which drove out of the town gate. But nobody knew where it went, and Gerda cried for a long time. She thought that he was drowned in the river which ran near the school. But she was NOT sure.', '2018-01-12 21:36:30');
+
+SELECT p.posted, p.text, u.name, u.surname
+ FROM post p
+ LEFT JOIN user u
+ ON p.author_id=u.id;
+ 
+ CREATE TABLE picture(id INT NOT NULL auto_increment, caption VARCHAR(20) NULL, img VARCHAR(20) NULL, downloaded TIMESTAMP DEFAULT current_TIMESTAMP, PRIMARY KEY(id));
+ INSERT INTO picture(id, caption, img, downloaded) VALUES (1, 'Me and my friends', 'yadn.net/1/1Z.jpg ', '2022-10-12 21:37:15'), (2, 'My dogs', 'se3.net/1/eu.jpg ', '2022-10-12 21:42:15'), (3, 'Weekends', 'sen.net/1/1eu.jpg ', '2021-05-26 14:17:15'), (4, 'Happy Bithday, Kay', 'ww2.inside/1/Oeu.jpg ', '2016-09-01 11:27:03'), (5, 'Take care, darlings', 'dn.tone/1/1ZOeu.jpg ', '2019-02-03 08:27:15');
+ SELECT * FROM picture;
+ 
+ CREATE TABLE people_on_picture(id INT NOT NULL auto_increment, user_id INT NOT NULL, picture_id INT NOT NULL, PRIMARY KEY(id),  FOREIGN KEY (user_id) REFERENCES user(id),  FOREIGN KEY (picture_id) REFERENCES picture(id));
+ INSERT INTO people_on_picture(id, user_id, picture_id) VALUES (1, 2, 3), (2, 2, 5), (3, 1, 1), (4, 1, 5), (5, 3, 3), (6, 3, 4), (7, 5, 2);
+ 
+ SELECT pic.caption, pic.img, pop.user_id
+ FROM picture pic
+ LEFT JOIN people_on_picture pop
+ on pic.id=pop.picture_id;
+ 
+ CREATE TABLE likes (id INT NOT NULL auto_increment, id_post INT NOT NULL, id_user INT NOT NULL, liked_at TIMESTAMP DEFAULT current_TIMESTAMP, PRIMARY KEY(id),  FOREIGN KEY (id_post) REFERENCES post(id),  FOREIGN KEY (id_user) REFERENCES user(id));
+ INSERT INTO likes(id, id_post, id_user, liked_at) VALUES (1, 2, 3, '2017-12-15 22:14:38'), (2, 2, 5, '2018-11-14 21:03:27'), (3, 1, 1, '2019-10-05 19:59:30'), (4, 1, 5, '2020-09-19 19:57:04'), (5, 3, 3, '2021-08-26 09:15:37'), (6, 3, 4, '2022-07-12 05:07:12'), (7, 5, 2, '2021-11-01 15:03:18');
