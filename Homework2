@@ -34,5 +34,5 @@ SELECT p.posted, p.text, u.name, u.surname
  LEFT JOIN people_on_picture pop
  on pic.id=pop.picture_id;
  
- CREATE TABLE likes (id INT NOT NULL auto_increment, id_post INT NOT NULL, id_user INT NOT NULL, liked_at TIMESTAMP DEFAULT current_TIMESTAMP, PRIMARY KEY(id),  FOREIGN KEY (id_post) REFERENCES post(id),  FOREIGN KEY (id_user) REFERENCES user(id));
+ CREATE TABLE likes (id INT NOT NULL auto_increment, id_post INT NOT NULL, id_user INT NOT NULL, liked_at TIMESTAMP DEFAULT current_TIMESTAMP, PRIMARY KEY(id), UNIQUE(id_post, id_user), FOREIGN KEY (id_post) REFERENCES post(id),  FOREIGN KEY (id_user) REFERENCES user(id));
  INSERT INTO likes(id, id_post, id_user, liked_at) VALUES (1, 2, 3, '2017-12-15 22:14:38'), (2, 2, 5, '2018-11-14 21:03:27'), (3, 1, 1, '2019-10-05 19:59:30'), (4, 1, 5, '2020-09-19 19:57:04'), (5, 3, 3, '2021-08-26 09:15:37'), (6, 3, 4, '2022-07-12 05:07:12'), (7, 5, 2, '2021-11-01 15:03:18');
