@@ -1,0 +1,23 @@
+INSERT INTO client(client_id, name,lastname,phone) VALUES
+(1, 'Alis', 'Smith', '+13475551243'), (2, 'John', 'Dow', '+12055151243'),
+(3, 'Amy', 'Lee', '+19075311143'), (4, 'Ched', 'Kriuger', '+14804513243'),
+(5, 'Daniel', 'Adare', '+14795221243');
+
+INSERT INTO category(category_id, category_name) VALUES
+(1, 'Sport'), (2, 'Garden'), (3, 'Health'), (4, 'House'), (5, 'Toys');
+
+INSERT INTO goods(goods_id, goods_name, goods_category, goods_price) VALUES
+(1, 'Fitball', 1, 50), (2, 'Mirror', 4, 200), (3, 'Doll', 5, 100),
+(4, 'Ball', 1, 20), (5, 'Hantell', 1, 70), (6, 'Puzzles', 5, 30),
+(7, 'Сupboard', 4, 500), (8, 'Tea', 3, 5), (9, 'Vitamins', 3, 50),
+(10, 'Thermometer', 3, 20), (11, 'Bed', 4, 700), (12, 'Sofa', 4, 350),
+(13, 'jumping-rope', 1, 5), (14, 'table', 4, 200), (15, 'bear', 5, 40),
+(16, 'hoop', 1, 50), (17, 'running track', 1, 7000), (18, 'constructor', 5, 130),
+(19, 'dresser', 4, 150), (20, 'cod-liver oil', 3, 35), (21, 'briar', 3, 3.50),
+(22, 'tonometer', 3, 120), (23, 'carpet', 4, 270), (24, 'jalousie', 4, 230);
+
+INSERT INTO orders(orders_id, client_id, goods_id, amount) VALUES
+(1, 2, 5, 2), (2, 3 ,7, 1), (3, 1, 10, 3), (4, 4 , 16, 2), (5, 1, 8, 1), (6, 5, 3, 3), (7, 4, 2, 2), (8, 2, 11, 1), 
+(9, 3, 15, 5), (10, 2, 9, 2), (11, 1, 1, 3), (12, 3, 22, 1), (13, 1 ,2, 2), (14, 5, 11, 3), (15, 2 , 17, 4), (16, 4, 4, 1),
+(17, 5, 6, 2), (18, 1, 12, 3), (19, 2, 13, 5), (20, 3, 14, 2), (21, 4, 15, 1), (22, 5, 17, 1), (23, 1, 18, 2),
+(24, 2, 19, 1), (25, 3, 20, 3), (26, 4, 21, 2), (27, 5, 23, 1), (28, 1, 24, 3);
