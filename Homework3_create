@@ -1,0 +1,34 @@
+CREATE DATABASE homework3;
+USE homework3;
+
+CREATE TABLE client(
+client_id INT NOT NULL auto_increment PRIMARY KEY, 
+name VARCHAR(30) DEFAULT 'unknown',
+lastname VARCHAR(30) DEFAULT 'unknown',
+phone VARCHAR(20) NULL);
+
+CREATE TABLE category(
+category_id INT NOT NULL auto_increment PRIMARY KEY,
+category_name VARCHAR(30) DEFAULT 'other');
+
+CREATE TABLE goods(
+goods_id INT NOT NULL auto_increment PRIMARY KEY, 
+goods_name VARCHAR(50) DEFAULT 'product',
+goods_category INT NOT NULL,
+goods_price DECIMAL(10,2) DEFAULT 19.99,
+FOREIGN KEY(goods_category) REFERENCES category(category_id));
+
+CREATE TABLE orders(
+orders_id INT NOT NULL auto_increment PRIMARY KEY, 
+client_id INT NOT NULL, 
+goods_id INT NOT NULL,
+amount INT NOT NULL,
+FOREIGN KEY(client_id) REFERENCES client(client_id),
+FOREIGN KEY(goods_id) REFERENCES goods(goods_id));
+
+
+
+
+
+
+
