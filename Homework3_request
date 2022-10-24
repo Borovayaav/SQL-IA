@@ -56,15 +56,13 @@ LEFT JOIN orders o ON o.client_id = cl.client_id
 LEFT JOIN goods g ON g.goods_id = o.goods_id;
  
 /*Вывести имена товаров, которые ни разу не были заказаны.*/
-SELECT  g.goods_name FROM orders o
-LEFT JOIN goods g ON g.goods_id = o.goods_id
-WHERE g.goods_id  not in (SELECT goods_id FROM orders);
+SELECT  g.goods_name FROM goods g
+LEFT JOIN orders o ON g.goods_id = o.goods_id
+WHERE o.order_id  IS NULL;
 
 /*Вывести имя категории и цены самого дорого товара (и имя товара тоже вывести) в ней, но только для тех, где самый дорогой товар 
 дороже 1000.*/
-WITH category_MAX(category, MAX_price) AS(SELECT category_name, MAX(goods_price) AS MAX_price FROM goods g
+SELECT category_name, MAX(goods_price) AS max_price FROM goods g
 INNER JOIN category c ON c.category_id = g.goods_category
-GROUP BY category_name)
-
-SELECT category, MAX_price FROM category_MAX
-WHERE MAX_price > 1000;
+GROUP BY category_id
+HAVING MAX(goods_price) > 1000;
