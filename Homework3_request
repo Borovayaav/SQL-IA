@@ -23,11 +23,12 @@ GROUP BY o.client_id, c.category_id
 ORDER BY client;
 
 /*Сумма (количество) купленных товаров по каждой категории (один товар может быть куплен несколько раз).*/
-SELECT category_name, COUNT(o.goods_id) AS amount FROM orders o
+SELECT category_name, sum(amount) AS cat_amount FROM orders o
 JOIN goods g ON g.goods_id = o.goods_id
 JOIN client cl ON o.client_id = cl.client_id
 JOIN category c ON c.category_id = g.goods_category
-GROUP BY  c.category_id;
+GROUP BY  c.category_id
+ORDER BY cat_amount;
 
 /*Вывести имя покупателя, наименование товара и цену, где в имени категории есть буква a или o, и цена товара больше 150*/
 SELECT CONCAT(name, ' ', lastname) AS client, goods_name, goods_price AS total FROM orders o
