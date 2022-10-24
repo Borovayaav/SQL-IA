@@ -65,4 +65,4 @@ WHERE o.order_id  IS NULL;
 SELECT category_name, MAX(goods_price) AS max_price FROM goods g
 INNER JOIN category c ON c.category_id = g.goods_category
 GROUP BY category_id
-HAVING MAX(goods_price) > 1000;
+HAVING max_price > 1000;
