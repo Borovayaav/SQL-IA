@@ -51,11 +51,11 @@ INSERT INTO pet (species,breed,pet_name,pet_owner,weight, veterinarian_id) VALUE
 которые обслуживают котов легче 7 кг.*/
 
 WITH dogs(vet_name, pet_name, species, weight) AS (
-select v.vet_name, p.pet_name, p.species, p.weight FROM pet p
+SELECT SUBSTRING_INDEX(v.vet_name, ' ',1), p.pet_name, p.species, p.weight FROM pet p 
 LEFT JOIN veterinarian v ON p.veterinarian_id=v.veterinarian_id
 WHERE p.species = 'dog' AND  p.weight > 30),
 cats AS (
-select v.vet_name, p.pet_name, p.species, p.weight FROM pet p
+SELECT SUBSTRING_INDEX(v.vet_name, ' ',1), p.pet_name, p.species, p.weight FROM pet p 
 LEFT JOIN veterinarian v ON p.veterinarian_id=v.veterinarian_id
 WHERE p.species = 'cat' AND  p.weight < 7)
 
