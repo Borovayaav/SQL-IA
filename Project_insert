@@ -1,0 +1,77 @@
+create database final_project;
+use final_project;
+
+create table country(
+    country_id INT unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    country_name VARCHAR(45) DEFAULT NULL
+);
+
+create table city(
+    city_id INT unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    city_name VARCHAR(45) DEFAULT NULL,
+    country_id INT unsigned DEFAULT NULL, 
+	FOREIGN KEY (country_id) REFERENCES country (country_id)
+);
+
+create table employee(
+    employee_id INT unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    employee_name VARCHAR(45) DEFAULT NULL
+);
+
+create table estate(
+    estate_id INT unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    city_id INT unsigned NOT NULL,
+    type enum('apartment','house','country house'),
+    square dec(10,2) null,
+    balcon enum('yes','no'),
+    rooms_amount INT unsigned DEFAULT 1,
+    pets_allowed enum('yes','no'),
+    about VARCHAR(450) DEFAULT NULL,
+    status enum('estate leased','estate bought','estate sold', 'estate rented'),
+	FOREIGN KEY (city_id) REFERENCES city (city_id)
+);
+
+create table work_with(
+    ww_id INT unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    estate_id INT unsigned NOT NULL,
+    employee_id INT unsigned DEFAULT NULL, 
+    date_from date not null,
+    date_to date DEFAULT NULL, 
+	FOREIGN KEY (estate_id) REFERENCES estate (estate_id),
+    FOREIGN KEY (employee_id) REFERENCES employee (employee_id)
+);
+
+create table clients(
+    clients_id INT unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    clients_name VARCHAR(45) NOT NULL,
+    clients_address VARCHAR(90) NOT NULL,
+    phone VARCHAR(20) DEFAULT NULL,
+    mail VARCHAR(50) DEFAULT NULL,
+    about VARCHAR(450) DEFAULT NULL
+);
+
+create table transactions(
+    transactions_id INT unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    seller_id INT unsigned NOT NULL,
+    buyer_id INT unsigned NOT NULL,
+    transactions_date date not null,
+    about VARCHAR(250) DEFAULT NULL,
+    FOREIGN KEY (seller_id) REFERENCES clients (clients_id),
+    FOREIGN KEY (buyer_id) REFERENCES clients (clients_id),
+    CHECK (seller_id != buyer_id)
+);
+
+create table contract(
+    contract_id INT unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    clients_id INT unsigned NOT NULL,
+    employee_id INT unsigned NOT NULL,
+    transactions_id INT unsigned NOT NULL,
+    contract_type ENUM('mediation (buying)', 'mediation (selling)', 'mediation (renting)',
+    'mediation (leasing)', 'buying (from a customer)', 'selling (to a customer)',
+    'leasing (from a customer)', 'renting (to a customer)'),
+    payment_amount_USD DECIMAL(10,2) DEFAULT NULL,
+    dated date NOT NULL,
+    FOREIGN KEY (clients_id) REFERENCES clients (clients_id),
+    FOREIGN KEY (employee_id) REFERENCES employee (employee_id),
+    FOREIGN KEY (transactions_id) REFERENCES transactions (transactions_id)
+);
