@@ -1,5 +1,5 @@
-CREATE DATABASE final_project;
-USE final_project;
+CREATE DATABASE project;
+USE project;
 
 CREATE TABLE country(
     country_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -14,31 +14,32 @@ CREATE TABLE city(
 );
 
 CREATE TABLE employee(
-    employee_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    employee_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     employee_name VARCHAR(45) DEFAULT NULL
 );
 
 CREATE TABLE estate(
-    estate_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	estate_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    employee_id INT DEFAULT NULL,
     city_id INT UNSIGNED NOT NULL,
     type ENUM('apartment','house','country house'),
     square dec(10,2) NULL,
     balcon ENUM('yes','no'),
     rooms_amount INT UNSIGNED DEFAULT 1,
     pets_allowed ENUM('yes','no'),
-    about VARCHAR(450) DEFAULT NULL,
-    status ENUM('estate leased','estate bought','estate sold', 'estate rented'),
-	FOREIGN KEY (city_id) REFERENCES city (city_id)
+    about VARCHAR(450) ,
+    status ENUM('estate leased','estate bought','estate sold', 'estate rented', 'available for rent/sale'),
+	FOREIGN KEY (city_id) REFERENCES city (city_id),
+    FOREIGN KEY (employee_id) REFERENCES employee (employee_id)
 );
 
-CREATE TABLE work_with(
-    ww_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    estate_id INT UNSIGNED NOT NULL,
-    employee_id INT UNSIGNED DEFAULT NULL, 
-    date_from DATE NOT NULL,
-    date_to DATE DEFAULT NULL, 
-	FOREIGN KEY (estate_id) REFERENCES estate (estate_id),
-    FOREIGN KEY (employee_id) REFERENCES employee (employee_id)
+CREATE TABLE worked_with_estate(
+	estate_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    previous_employee_id INT DEFAULT NULL,
+    new_employee_id INT DEFAULT NULL,
+    city_id INT UNSIGNED NOT NULL,
+    type ENUM('apartment','house','country house'),
+    changed_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE clients(
@@ -64,7 +65,8 @@ CREATE TABLE transactions(
 CREATE TABLE contract(
     contract_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
     clients_id INT UNSIGNED NOT NULL,
-    employee_id INT UNSIGNED NOT NULL,
+    estate_id INT UNSIGNED NOT NULL,
+    employee_id INT UNSIGNED NULL,
     transactions_id INT UNSIGNED NOT NULL,
     contract_type ENUM('mediation (buying)', 'mediation (selling)', 'mediation (renting)',
     'mediation (leasing)', 'buying (from a customer)', 'selling (to a customer)',
@@ -72,6 +74,19 @@ CREATE TABLE contract(
     payment_amount_USD DECIMAL(10,2) DEFAULT NULL,
     dated DATE NOT NULL,
     FOREIGN KEY (clients_id) REFERENCES clients (clients_id),
+    FOREIGN KEY (estate_id) REFERENCES estate (estate_id),
     FOREIGN KEY (employee_id) REFERENCES employee (employee_id),
     FOREIGN KEY (transactions_id) REFERENCES transactions (transactions_id)
+);
+
+
+CREATE TABLE deleted_contract(
+    contract_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    clients_id INT UNSIGNED NOT NULL,
+    estate_id INT UNSIGNED NOT NULL,
+    employee_id INT UNSIGNED NULL,
+    contract_type ENUM('mediation (buying)', 'mediation (selling)', 'mediation (renting)',
+    'mediation (leasing)', 'buying (from a customer)', 'selling (to a customer)',
+    'leasing (from a customer)', 'renting (to a customer)'),
+    delete_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
