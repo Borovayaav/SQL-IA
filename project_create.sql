@@ -20,7 +20,7 @@ CREATE TABLE employee(
 
 CREATE TABLE estate(
 	estate_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    employee_id INT DEFAULT NULL,
+    employee_id INT UNSIGNED DEFAULT NULL,
     city_id INT UNSIGNED NOT NULL,
     type ENUM('apartment','house','country house'),
     square dec(10,2) NULL,
@@ -35,8 +35,8 @@ CREATE TABLE estate(
 
 CREATE TABLE worked_with_estate(
 	estate_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    previous_employee_id INT DEFAULT NULL,
-    new_employee_id INT DEFAULT NULL,
+    previous_employee_id INT UNSIGNED DEFAULT NULL,
+    new_employee_id INT UNSIGNED DEFAULT NULL,
     city_id INT UNSIGNED NOT NULL,
     type ENUM('apartment','house','country house'),
     changed_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -62,31 +62,23 @@ CREATE TABLE transactions(
     CHECK (seller_id != buyer_id)
 );
 
+CREATE TABLE contract_type(
+	contract_type_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	contract_type_operation VARCHAR(50) DEFAULT NULL)
+    ;
+
 CREATE TABLE contract(
     contract_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    contract_type_id INT UNSIGNED NOT NULL,
     clients_id INT UNSIGNED NOT NULL,
     estate_id INT UNSIGNED NOT NULL,
     employee_id INT UNSIGNED NULL,
     transactions_id INT UNSIGNED NOT NULL,
-    contract_type ENUM('mediation (buying)', 'mediation (selling)', 'mediation (renting)',
-    'mediation (leasing)', 'buying (from a customer)', 'selling (to a customer)',
-    'leasing (from a customer)', 'renting (to a customer)'),
     payment_amount_USD DECIMAL(10,2) DEFAULT NULL,
     dated DATE NOT NULL,
+    finished BOOL NULL,
     FOREIGN KEY (clients_id) REFERENCES clients (clients_id),
     FOREIGN KEY (estate_id) REFERENCES estate (estate_id),
     FOREIGN KEY (employee_id) REFERENCES employee (employee_id),
     FOREIGN KEY (transactions_id) REFERENCES transactions (transactions_id)
-);
-
-
-CREATE TABLE deleted_contract(
-    contract_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    clients_id INT UNSIGNED NOT NULL,
-    estate_id INT UNSIGNED NOT NULL,
-    employee_id INT UNSIGNED NULL,
-    contract_type ENUM('mediation (buying)', 'mediation (selling)', 'mediation (renting)',
-    'mediation (leasing)', 'buying (from a customer)', 'selling (to a customer)',
-    'leasing (from a customer)', 'renting (to a customer)'),
-    delete_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
