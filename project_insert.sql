@@ -1,4 +1,3 @@
-USE project;
 INSERT INTO country(country_name) VALUES(
 'Belarus'),( 'Russia'), ('Poland'), ('Germany'), ('France'), ('Italy'), ('Hungary'), ('Brazil'), ('Austria'), ('Belgium'),
 ('Georgia'), ('Denmark'), ('Egypt'), ('India'), ('Ireland'), ('Spain'), ('Canada'), ('Cyprus'), ('China'), ('Netherlands');
@@ -54,19 +53,25 @@ INSERT INTO transactions VALUES
 (13, 6, 11, '2022-04-01', 'clear change with fee'),(14, 12, 4, '2021-12-25', 'payment')
 ;
 
-INSERT INTO contract(clients_id, estate_id, employee_id, transactions_id, contract_type, payment_amount_USD, dated) VALUES
-(12, 1, 4, 1, 'selling (to a customer)', 25411.37, '2022-05-18'),
-(5, 2, 1, 2, 'buying (from a customer)', 5237.41, '2021-09-19'),
-(1, 3, 2, 3, 'leasing (from a customer)', 1500.00, '2018-10-31'),
-(7, 4, 10, 4, 'mediation (buying)', 455000.00, '2020-09-01'),
-(5, 5, 6, 5, 'mediation (leasing)', 4500.00, '2021-04-28'),
-(14, 6, 3, 6, 'selling (to a customer)', 7000.00, '2022-03-12'),
-(8, 7, 3, 7, 'selling (to a customer)', 23518.00, '2020-08-18'),
-(6, 8, 5, 8, 'mediation (leasing)', 518.00, '2021-05-07'),
-(2, 9, 9, 9, 'selling (to a customer)', 135516.40, '2022-05-18'),
-(9, 10, 4, 10, 'buying (from a customer)', 18819.53, '2022-05-18'),
-(11, 11, 7, 11, 'selling (to a customer)', 35592.40, '2019-02-27'),
-(10, 1, 8, 12, 'mediation (selling)', 124689.23, '2019-11-03'),
-(6, 3, 4, 13, 'buying (from a customer)', 4123.18, '2022-04-01'),
-(4, 4, 2, 14, 'mediation (renting)', 214.30, '2021-12-25')
+INSERT INTO contract_type(contract_type_operation) VALUES
+('mediation (buying)'), ('mediation (selling)'), ('mediation (renting)'),
+('mediation (leasing)'), ('buying (from a customer)'), ('selling (to a customer)'),
+('leasing (from a customer)'), ('renting (to a customer)')
+;
+
+INSERT INTO contract(clients_id, contract_type_id,  estate_id, employee_id, transactions_id, payment_amount_USD, dated, finished) VALUES
+(12, 8, 1, 4, 1, 25411.37, '2022-05-18', 1),
+(5, 7, 2, 1, 2, 5237.41, '2021-09-19',1),
+(1, 6, 3, 2, 3, 1500.00, '2018-10-31',1),
+(7, 5, 4, 10, 4, 455000.00, '2020-09-01',0),
+(5, 4, 5, 6, 5, 4500.00, '2021-04-28',0),
+(14,3, 6, 3, 6, 7000.00, '2022-03-12',0),
+(8, 2, 7, 3, 7, 23518.00, '2020-08-18',1),
+(6, 1, 8, 5, 8, 518.00, '2021-05-07',1),
+(2, 2, 9, 9, 9, 135516.40, '2022-05-18',1),
+(9, 3, 10, 4, 10, 18819.53, '2022-05-18',0),
+(11, 4, 11, 7, 11, 35592.40, '2019-02-27',0),
+(10, 5, 1, 8, 12, 124689.23, '2019-11-03',1),
+(6, 4, 3, 4, 13, 4123.18, '2022-04-01',1),
+(4, 3, 4, 2, 14, 214.30, '2021-12-25',0)
 ;
