@@ -76,9 +76,15 @@ CREATE TABLE contract(
     transactions_id INT UNSIGNED NOT NULL,
     payment_amount_USD DECIMAL(10,2) DEFAULT NULL,
     dated DATE NOT NULL,
-    finished BOOL NULL,
+    contract_status ENUM('active','finished'),
     FOREIGN KEY (clients_id) REFERENCES clients (clients_id),
     FOREIGN KEY (estate_id) REFERENCES estate (estate_id),
     FOREIGN KEY (employee_id) REFERENCES employee (employee_id),
     FOREIGN KEY (transactions_id) REFERENCES transactions (transactions_id)
 );
+
+CREATE TABLE currency(
+	currency_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	currency_cost DECIMAL(5,4) NOT NULL,
+    currency_date DATE NOT NULL)
+    ;
